@@ -135,12 +135,17 @@ def assignment(nltk):
     "Christchurchs rika kulturarv och grönområden skapar en naturskönt och välkomnande atmosfär, förstärkt av ett mångfaldigt och alltmer mångkulturellt samhälle.",
   ]
 
+  cgpt_scores = []
+  claude_scores = []
+
   for i in range(6):
     ref = tokenise(references[i])
     t1 = tokenise(translations1[i])
     t2 = tokenise(translations2[i])
     cgpt_score, cgpt_precisions = bleu_score(ref, t1, 4)
     claude_score, claude_precisions = bleu_score(ref, t2, 4)
+    cgpt_scores.append(cgpt_score)
+    claude_scores.append(claude_score)
 
     if (nltk):
       cgpt_nltk = sentence_bleu([ref], t1, weights=nltk_weights(4))
@@ -154,6 +159,18 @@ def assignment(nltk):
       print(f'ChatGPT: {cgpt_precisions}\t{cgpt_score}')
       print(f'Claude:  {claude_precisions}\t{claude_score}')
     print('-------------')
+    print(f'ChatGPT average = {sum(cgpt_scores)/6}')
+    print(f'Claude average = {sum(claude_scores)/6}')
+    print('-------------')
+    print(f'ChatGPT average on ML text = {sum(cgpt_scores[:3])/3}')
+    print(f'Claude average on ML text = {sum(claude_scores[:3])/3}')
+    print(f'ChatGPT average on ChCh text = {sum(cgpt_scores[-3:])/3}')
+    print(f'Claude average on ChCh text = {sum(claude_scores[-3:])/3}')
+    print('-------------')
+    print(f'Reference sentence lengths: {[len(tokenise(s)) for s in references]}')
+    print(f'ChatGPT sentence lengths: {[len(tokenise(s)) for s in translations1]}')
+    print(f'Claude sentence lengths: {[len(tokenise(s)) for s in translations2]}')
+    print('-------------')
 
 test()
-assignment(False)
+assignment(True)
