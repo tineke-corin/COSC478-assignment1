@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "bleu"
+version = "0.1.0"
+description = ""
+authors = ["Tineke Corin <tineke@mediasuite.co.nz>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+nltk = "^3.9.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
